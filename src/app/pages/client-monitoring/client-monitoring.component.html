@@ -1,0 +1,484 @@
+<!--<nz-collapse>-->
+<!--  <nz-collapse-panel [nzHeader]="'Pending Survey Referral'" [nzActive]="true" [nzDisabled]="false">-->
+<!--    <p style="margin:0;">-->
+<!--      <p-table [value]="listOfData" [paginator]="true" [rows]="10">-->
+<!--        <ng-template pTemplate="header">-->
+<!--          <tr>-->
+<!--            <th>Survey ID</th>-->
+<!--            <th>Submitted On</th>-->
+<!--            <th>Agent</th>-->
+<!--            <th>Score</th>-->
+<!--            <th>Discount Loading</th>-->
+<!--            <th>Final Price</th>-->
+<!--            <th>Pricing Rate FLEXA</th>-->
+<!--            <th>Pricing Rate NAT CAT</th>-->
+<!--            <th>Status</th>-->
+<!--            <th>Decision</th>-->
+<!--            <th>Reason</th>-->
+<!--            <th>Actions</th>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="body" let-data>-->
+<!--          <tr *ngIf="data.decision.toLowerCase() == 'referral'">-->
+<!--            <td>{{ data.surveyID }}</td>-->
+<!--            <td>{{ data.dateCreate | date : "dd-MM-yyyy"}}</td>-->
+<!--            <td>{{ data.agent }}</td>-->
+<!--            <td>{{ data.qualityScore }}</td>-->
+<!--            <td>{{ data.discountLoading |  percent:'1.2'}}</td>-->
+<!--            <td>{{ data.finalPrice| number : '1.2-2'}}</td>-->
+<!--            <td>{{ data.pricingRateFLEXA | number : '1.2-2'}}</td>-->
+<!--            <td>{{ data.pricingRateNATCAT | number : '1.2-2'}}</td>-->
+<!--            <td>-->
+<!--              &lt;!&ndash;              <i nz-icon nzType="play-circle" nzTheme="outline" class="iconStatus done"&ndash;&gt;-->
+<!--              &lt;!&ndash;                 *ngIf="data.decision.toLowerCase() == 'accepted'"></i>&ndash;&gt;-->
+<!--              <i nz-icon nzType="check-circle" nzTheme="outline"-->
+<!--                 class="iconStatus referral"></i>-->
+<!--              &lt;!&ndash;              <i nz-icon nzType="issues-close" nzTheme="outline"&ndash;&gt;-->
+<!--              &lt;!&ndash;                 class="iconStatus error"&ndash;&gt;-->
+<!--              &lt;!&ndash;                 *ngIf="data.decision.toLowerCase() !== 'accepted'"></i>&ndash;&gt;-->
+
+<!--            </td>-->
+<!--            <td>{{ data.decision }}</td>-->
+<!--            <td>{{ data.referralReason }}</td>-->
+
+<!--            <td>-->
+<!--              <button nz-button nzType="sucess" (click)="editSurveyUser(data,'SHOW')" [nzSize]="'small'"><i nz-icon-->
+<!--                                                                                                            nzType="edit"></i>-->
+<!--              </button> &nbsp;-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+<!--      </p-table>-->
+<!--    </p>-->
+<!--  </nz-collapse-panel>-->
+
+<!--  <nz-collapse-panel [nzHeader]="'Processed Survey in the last X (parameter) Months'" [nzActive]="true" [nzDisabled]="false">-->
+<!--    <p style="margin:0;">-->
+
+<!--      <p-table [value]="listOfData" [paginator]="true" [rows]="10">-->
+<!--        <ng-template pTemplate="header">-->
+<!--          <tr>-->
+<!--            <th>Survey ID</th>-->
+<!--            <th>Submitted On</th>-->
+<!--            <th>Agent</th>-->
+<!--            <th>Score</th>-->
+<!--            <th>Discount Loading</th>-->
+<!--            <th>Final Price</th>-->
+<!--            <th>Pricing Rate FLEXA</th>-->
+<!--            <th>Pricing Rate NAT CAT</th>-->
+<!--            <th>Status</th>-->
+<!--            <th>By</th>-->
+<!--            <th>Reason</th>-->
+<!--            <th>Actions</th>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+<!--        <ng-template pTemplate="body" let-data>-->
+<!--          <tr *ngIf="data.decision.toLowerCase() !== 'referral'">-->
+<!--            <td>{{ data.surveyID }}</td>-->
+<!--            <td>{{ data.dateCreate | date :"dd-MM-yyyy" }}</td>-->
+<!--            <td>{{ data.agent }}</td>-->
+<!--            <td>{{ data.qualityScore }}</td>-->
+<!--            <td>{{ data.discountLoading|  percent:'1.2'}}</td>-->
+<!--            <td>{{ data.finalPrice| number : '1.2-2'}}</td>-->
+<!--            <td>{{ data.pricingRateFLEXA | number : '1.2-2'}}</td>-->
+<!--            <td>{{ data.pricingRateNATCAT |  number : '1.2-2'}}</td>-->
+<!--            <td>-->
+<!--              &lt;!&ndash;              <i nz-icon nzType="play-circle" nzTheme="outline" class="iconStatus done"&ndash;&gt;-->
+<!--              &lt;!&ndash;                 *ngIf="data.decision.toLowerCase() == 'accepted'"></i>&ndash;&gt;-->
+<!--              <i nz-icon nzType="check-circle" nzTheme="outline"-->
+<!--                 class="iconStatus done" *ngIf="data.decision.toLowerCase() == 'accepted'"></i>-->
+<!--              &lt;!&ndash;              <i nz-icon nzType="issues-close" nzTheme="outline"&ndash;&gt;-->
+<!--              &lt;!&ndash;                 class="iconStatus error"&ndash;&gt;-->
+<!--              &lt;!&ndash;                 *ngIf="data.decision.toLowerCase() !== 'accepted'"></i>&ndash;&gt;-->
+
+<!--              <i nz-icon nzType="close-circle" class="iconStatus error"-->
+<!--                 nzTheme="outline" *ngIf="data.decision.toLowerCase() !== 'accepted'"></i>-->
+<!--            </td>-->
+<!--            <td>{{ data.by }}</td>-->
+<!--            <td>{{ data.referralReason }}</td>-->
+<!--            <td>-->
+<!--              <button nz-button nzType="primary" (click)="editSurveyUser(data,null)" [nzSize]="'small'"><i nz-icon-->
+<!--                                                                                                           nzType="eye"></i>-->
+<!--              </button> &nbsp;-->
+<!--              &lt;!&ndash;              <button nz-button nzType="sucess" [nzSize]="'small'"><i nz-icon nzType="edit"></i></button> &nbsp;&ndash;&gt;-->
+<!--              &lt;!&ndash;              <button nz-button nzType="danger" (click)="delete(data.id)" [nzSize]="'small'"><i nz-icon nzType="delete"></i></button>&ndash;&gt;-->
+<!--            </td>-->
+<!--          </tr>-->
+<!--        </ng-template>-->
+<!--      </p-table>-->
+<!--    </p>-->
+<!--  </nz-collapse-panel>-->
+<!--</nz-collapse>-->
+
+
+<!--&lt;!&ndash;<nz-modal [(nzVisible)]="isVisible" nzTitle="Edit Survey"  (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">&ndash;&gt;-->
+<!--&lt;!&ndash;  <ng-template #newTemplateModal let-modal>&ndash;&gt;-->
+
+<!--<p-dialog [style]="{'width':'1300px'}" header="Edit Survey" [(visible)]="isVisible">-->
+
+
+<!--  <div class="claim-tab">-->
+<!--    &lt;!&ndash;    <p-scrollPanel [style]="{width: '100%', height: '200px'}" styleClass="custombar2">&ndash;&gt;-->
+
+<!--    <p-tabView class="ui-window-panel" [controlClose]="true">-->
+<!--      <p-tabPanel class="tab-pane fade" *ngFor=" let section of listOfData3" header="{{section.sectionName}}">-->
+
+<!--        <div *ngFor="let answer of section.answer" class="row">-->
+<!--          <div class="col-md-6">-->
+<!--            <label> {{answer.textQuestion}}</label>-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <input class="inp" type="text" disabled value="{{answer.textAnswers}}">-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </p-tabPanel>-->
+
+<!--      <p-tabPanel class="tab-pane fade" header="Media">-->
+<!--        <div class="container-fluid">-->
+<!--          <p-carousel [value]="mediaImage" [numVisible]="1" [numScroll]="1" [circular]="false">-->
+<!--            <p-header>-->
+<!--              <h3>Picture File</h3>-->
+<!--            </p-header>-->
+<!--            <ng-template let-media pTemplate="item">-->
+<!--              <div *ngIf="media.mediaType.toLowerCase() == 'images'" class="media-details">-->
+<!--                <div class="p-grid p-nogutter">-->
+<!--                  <div class="p-col-12 media-data">-->
+<!--                    <div class="media-title">{{media.name}}</div>-->
+<!--                    <div class="media-subtitle">{{media.mediaType}} | {{media.sectionTag}}</div>-->
+<!--                    <div>-->
+<!--                      &lt;!&ndash;                      <img class="imgStyle" [src]="'data:image/jpeg;base64,'+ media.mediaContent"/>&ndash;&gt;-->
+<!--                      <img (click)="showPicture(media.id)" class="svg" src="assets/img/picture.svg"/>-->
+<!--                      &lt;!&ndash;                      <i style="color: #007090;font-size: 600%;padding-left: 4%;" nz-icon nzType="camera" nzTheme="outline"></i>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--          </p-carousel>-->
+<!--        </div>-->
+<!--        <div class="container-fluid">-->
+<!--          <p-carousel [value]="mediaVideos" [numVisible]="1" [numScroll]="1" [circular]="false">-->
+<!--            <p-header>-->
+<!--              <h3>Video File</h3>-->
+<!--            </p-header>-->
+<!--            <ng-template let-media pTemplate="item">-->
+<!--              <div *ngIf="media.mediaType.toLowerCase() == 'videos'"  class="media-details">-->
+<!--                <div class="p-grid p-nogutter">-->
+<!--                  <div class="p-col-12 media-data">-->
+<!--                    <div class="media-title">{{media.name}}</div>-->
+<!--                    <div class="media-subtitle">{{media.mediaType}} | {{media.sectionTag}}</div>-->
+<!--                    <div>-->
+<!--                      <video (click)="showVideo(media.id)" class="vid"  controls>-->
+
+<!--                        &lt;!&ndash;                        <source [src]="'data:video/mp4;base64,'+media.mediaContent" type="video/mp4">&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        <i style="color: #007090;font-size: 600%;padding-left: 4%;" nz-icon nzType="video-camera" nzTheme="outline"></i>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        Your browser does not support the video tag.&ndash;&gt;-->
+<!--                      </video>-->
+<!--                    </div>-->
+<!--                    <div class="media-buttons">-->
+<!--                      &lt;!&ndash;                      <button pButton type="button" (click)="showVideo()" class="ui-button-secondary"&ndash;&gt;-->
+<!--                      &lt;!&ndash;                              icon="pi pi-star"></button>&ndash;&gt;-->
+<!--                      &lt;!&ndash;                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>&ndash;&gt;-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--          </p-carousel>-->
+<!--        </div>-->
+<!--        <div class="container-fluid">-->
+<!--          <p-carousel [value]="mediaAudios" [numVisible]="1" [numScroll]="1" [circular]="false">-->
+<!--            <p-header>-->
+<!--              <h3>Audio File</h3>-->
+<!--            </p-header>-->
+<!--            <ng-template let-media pTemplate="item">-->
+<!--              <div class="media-details">-->
+<!--                <div class="p-grid p-nogutter">-->
+<!--                  <div class="p-col-12 media-data">-->
+<!--                    <div class="media-title">{{media.name}}</div>-->
+<!--                    <div class="media-subtitle">{{media.mediaType}} | {{media.sectionTag}}</div>-->
+<!--                    <div  style="cursor: pointer">-->
+<!--                      &lt;!&ndash;                      <audio   controls class="vid" ></audio>&ndash;&gt;-->
+<!--                      <img (click)="showAudio(media.id)" class="svg" src="assets/img/audio.svg"/>-->
+
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <div class="car-buttons">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-search"></button>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-star"></button>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--          </p-carousel>-->
+<!--        </div>-->
+<!--        <div class="container-fluid">-->
+<!--          <p-carousel [value]="mediaOthers" [numVisible]="4" [numScroll]="3" [circular]="false">-->
+<!--            <p-header>-->
+<!--              <h3>Others</h3>-->
+<!--            </p-header>-->
+<!--            <ng-template let-media pTemplate="item">-->
+<!--              <div class="media-details">-->
+<!--                <div class="p-grid p-nogutter">-->
+<!--                  <div class="p-col-12 media-data">-->
+<!--                    <div class="media-title">{{media.name}}</div>-->
+<!--                    <div class="media-subtitle">{{media.mediaType}} | {{media.sectionTag}}</div>-->
+<!--                    <div>-->
+
+<!--                      <p> OTHERS.pdf</p>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                    <div class="car-buttons">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-search"></button>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-star"></button>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                      <button pButton type="button" class="ui-button-secondary" icon="pi pi-cog"></button>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--          </p-carousel>-->
+<!--        </div>-->
+<!--      </p-tabPanel>-->
+<!--      <p-tabPanel class="tab-pane fade" header="Decision">-->
+<!--        <div class="row">-->
+<!--          <div class="col-md-6">-->
+<!--            <label> Decision</label>-->
+<!--          </div>-->
+<!--          <div class="col-md-6">-->
+<!--            <input class="inp" type="text" disabled value="{{decision}}">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <br/>-->
+<!--        <div *ngIf="showDecisionSelect">-->
+<!--          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="role" nzRequired>Pending decision</nz-form-label>-->
+<!--          <select class="custom-select" title="Please select decision" style=" width: 100%;" [(ngModel)]="decision">-->
+<!--            <option class="custom-select-sm" value="ACCEPTED" label="ACCEPTED"></option>-->
+<!--            <option class="custom-select-sm" value="DECLINED" label="DECLINED"></option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--      </p-tabPanel>-->
+<!--    </p-tabView>-->
+<!--  </div>-->
+
+
+<!--  <p-footer>-->
+<!--    <button *ngIf="showDecisionSelect" nz-button nzType="primary" (click)="updateSurvey()">Save</button>-->
+
+<!--  </p-footer>-->
+<!--</p-dialog>-->
+
+
+<!--<p-dialog header="Show video"  [style]="{'width':'1000px', 'margin-right':'80px'}" [(visible)]="isVisibleVideo">-->
+<!--  &lt;!&ndash;  <video>&ndash;&gt;-->
+<!--  &lt;!&ndash;    <source [src]="'data:video/mp4;base64,'+mediaContent" type="video/mp4">&ndash;&gt;-->
+<!--  &lt;!&ndash;    Your browser does not support HTML5 video.&ndash;&gt;-->
+<!--  &lt;!&ndash;  </video>&ndash;&gt;-->
+
+<!--  <video  [style]="{'width':'1000px', 'margin-right':'80px'}" controls-->
+<!--          [src]="'data:video/mp4;base64,'+mediaContent">-->
+<!--    Your browser does not support the-->
+<!--    <code>video</code> element.-->
+<!--  </video>-->
+<!--</p-dialog>-->
+
+
+<!--<p-dialog [style]="{'width':'1000px', 'margin-right':'80px'}"-->
+<!--          header="Show Picture" [(visible)]="isVisiblePicture" >-->
+<!--  <img class="imgStyle" [src]="'data:image/jpeg;base64,'+ mediaContent" alt=""/>-->
+
+<!--</p-dialog>-->
+
+
+
+<!--<p-dialog [style]="{'width':'1000px', 'margin-right':'80px'}"-->
+<!--          header="Show Audio" [(visible)]="isVisibleAudio" >-->
+<!--  <audio  style="width: 100%;"-->
+<!--          controls-->
+<!--          [src]="'data:audio/amr;base64,'+mediaContent">-->
+<!--    Your browser does not support the-->
+<!--    <code>audio</code> element.-->
+<!--  </audio>-->
+<!--</p-dialog>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--&lt;!&ndash;  <nz-tabset>&ndash;&gt;-->
+<!--&lt;!&ndash;    <nz-tab *ngFor=" let section of listOfData3" nzTitle="{{section.sectionName}}">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div *ngFor="let answer of section.answer" class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="col-md-6">&ndash;&gt;-->
+<!--&lt;!&ndash;          <label> {{answer.textQuestion}}</label>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="col-md-6">&ndash;&gt;-->
+<!--&lt;!&ndash;          <input class="inp" type="text" disabled value="{{answer.textAnswers}}">&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </nz-tab>&ndash;&gt;-->
+<!--&lt;!&ndash;    <nz-tab nzTitle="Decision">&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-select style="    width: 100%;" [(ngModel)]="decision">&ndash;&gt;-->
+<!--&lt;!&ndash;        <nz-option nzValue="ACCEPTED" nzLabel="ACCEPTED"></nz-option>&ndash;&gt;-->
+<!--&lt;!&ndash;        <nz-option nzValue="DECLINED" nzLabel="DECLINED"></nz-option>&ndash;&gt;-->
+<!--&lt;!&ndash;      </nz-select>&ndash;&gt;-->
+<!--&lt;!&ndash;    </nz-tab>&ndash;&gt;-->
+<!--&lt;!&ndash;  </nz-tabset>&ndash;&gt;-->
+
+<!--&lt;!&ndash;</nz-modal>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;  <div class="modal-header">&ndash;&gt;-->
+<!--&lt;!&ndash;    <h4 class="modal-title" id="modal-basic-title">New Template</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button type="button" class="close" aria-label="Close" (click)="click1()">&ndash;&gt;-->
+<!--&lt;!&ndash;      <span aria-hidden="true">&times;</span>&ndash;&gt;-->
+<!--&lt;!&ndash;    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="modal-body" id="modalBody">&ndash;&gt;-->
+<!--&lt;!&ndash;    <form-wizard #wizardRef>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <wizard-step [title]="'section1'">&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <table  id="healthCheck" class="table table-striped">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div *ngFor="let section of listOfData3">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div *ngFor="let answer of section.answer">&ndash;&gt;-->
+<!--&lt;!&ndash;          <thead>&ndash;&gt;-->
+<!--&lt;!&ndash;          <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;            <th >&ndash;&gt;-->
+<!--&lt;!&ndash;              {{answer.textQuestion}}&ndash;&gt;-->
+<!--&lt;!&ndash;            </th>&ndash;&gt;-->
+<!--&lt;!&ndash;          </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;          </thead>&ndash;&gt;-->
+<!--&lt;!&ndash;          <tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;          <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;            <td><span class="text-capitalize">{{ answer.textAnswers }}</span> </td>&ndash;&gt;-->
+<!--&lt;!&ndash;          </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;          </tbody>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </table>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;      </wizard-step>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <wizard-step [title]="'S2'">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="container-fluid wizard-content">&ndash;&gt;-->
+<!--&lt;!&ndash;          <form nz-form [formGroup]="validateForm2" >&ndash;&gt;-->
+<!--&lt;!&ndash;            <nz-form-item style="margin-top: 1%;">&ndash;&gt;-->
+<!--&lt;!&ndash;              <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="email">Q1</nz-form-label>&ndash;&gt;-->
+<!--&lt;!&ndash;              <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input disabled nz-input formControlName="email" />&ndash;&gt;-->
+<!--&lt;!&ndash;              </nz-form-control>&ndash;&gt;-->
+<!--&lt;!&ndash;            </nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;            <nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;              <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="email">Q2</nz-form-label>&ndash;&gt;-->
+<!--&lt;!&ndash;              <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input disabled nz-input formControlName="email"  />&ndash;&gt;-->
+<!--&lt;!&ndash;              </nz-form-control>&ndash;&gt;-->
+<!--&lt;!&ndash;            </nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;            <nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;              <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="email">Q3</nz-form-label>&ndash;&gt;-->
+<!--&lt;!&ndash;              <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is not valid E-mail!">&ndash;&gt;-->
+<!--&lt;!&ndash;                <input disabled nz-input formControlName="email" />&ndash;&gt;-->
+<!--&lt;!&ndash;              </nz-form-control>&ndash;&gt;-->
+<!--&lt;!&ndash;            </nz-form-item>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;          </form>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </wizard-step>&ndash;&gt;-->
+<!--&lt;!&ndash;    </form-wizard>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    &lt;!&ndash;<new-template-form [data]="data"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;    &lt;!&ndash;(proceed)="saveTemplate($event)"></new-template-form>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="modal-footer">&ndash;&gt;-->
+<!--&lt;!&ndash;    <button type="button" class="btn btn-outline-dark mr-auto" (click)="click1()">Cancel</button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button *ngIf="wizardRef?.hasPrevStep" type="button" class="btn btn-outline-dark" (click)="wizardRef.previous()">&ndash;&gt;-->
+<!--&lt;!&ndash;      <span class="fa fa-chevron-left"></span> Back&ndash;&gt;-->
+<!--&lt;!&ndash;    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button *ngIf="wizardRef?.hasNextStep" type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;            class="btn btn-outline-dark" (click)="wizardRef.next()">Next&ndash;&gt;-->
+<!--&lt;!&ndash;      <span class="fa fa-chevron-right"></span></button>&ndash;&gt;-->
+<!--&lt;!&ndash;    <button *ngIf="!wizardRef?.hasNextStep"&ndash;&gt;-->
+<!--&lt;!&ndash;            type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;            class="btn btn-outline-dark" (click)="saveTemplate()">&ndash;&gt;-->
+<!--&lt;!&ndash;      <span *ngIf="!saveLoading" class="fa fa-floppy-o"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;      <span *ngIf="saveLoading" class="fa fa-spin fa-spinner"></span>&ndash;&gt;-->
+<!--&lt;!&ndash;      Save&ndash;&gt;-->
+<!--&lt;!&ndash;    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;  <form nz-form [formGroup]="validateForm" >&ndash;&gt;-->
+<!--&lt;!&ndash;    <nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="surveyID">Survey ID</nz-form-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-control [nzSm]="14" [nzXs]="24" >&ndash;&gt;-->
+<!--&lt;!&ndash;        <input nz-input formControlName="surveyID" id="surveyID" />&ndash;&gt;-->
+<!--&lt;!&ndash;      </nz-form-control>&ndash;&gt;-->
+<!--&lt;!&ndash;    </nz-form-item>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dateCreate" nzRequired>Submitted on</nz-form-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-control [nzSm]="18" [nzXs]="24" >&ndash;&gt;-->
+<!--&lt;!&ndash;        <nz-date-picker formControlName="dateCreate"></nz-date-picker>&ndash;&gt;-->
+<!--&lt;!&ndash;      </nz-form-control>&ndash;&gt;-->
+<!--&lt;!&ndash;    </nz-form-item>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    <nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="agent">Agent</nz-form-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-control [nzSm]="14" [nzXs]="24" >&ndash;&gt;-->
+<!--&lt;!&ndash;        <input nz-input formControlName="agent" id="agent" />&ndash;&gt;-->
+<!--&lt;!&ndash;      </nz-form-control>&ndash;&gt;-->
+<!--&lt;!&ndash;    </nz-form-item>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="qualityScore">Score</nz-form-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-control [nzSm]="14" [nzXs]="24" >&ndash;&gt;-->
+<!--&lt;!&ndash;        <input nz-input formControlName="qualityScore" id="qualityScore" />&ndash;&gt;-->
+<!--&lt;!&ndash;      </nz-form-control>&ndash;&gt;-->
+<!--&lt;!&ndash;    </nz-form-item>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;    <nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-label [nzSm]="6" [nzXs]="24"  nzFor="referralReason">Reason</nz-form-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-control [nzSm]="14" [nzXs]="24" >&ndash;&gt;-->
+<!--&lt;!&ndash;        <input nz-input formControlName="referralReason" id="referralReason" />&ndash;&gt;-->
+<!--&lt;!&ndash;      </nz-form-control>&ndash;&gt;-->
+<!--&lt;!&ndash;    </nz-form-item>&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <nz-form-item>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="decision" nzRequired>Decision</nz-form-label>&ndash;&gt;-->
+<!--&lt;!&ndash;      <nz-form-control [nzSm]="14"&ndash;&gt;-->
+<!--&lt;!&ndash;                       [nzXs]="24" [nzSpan]="12"  nzHasFeedback>&ndash;&gt;-->
+<!--&lt;!&ndash;        <nz-select formControlName="decision" [ngModel]="'USER'">&ndash;&gt;-->
+<!--&lt;!&ndash;          <nz-option nzValue="ACCEPTED" nzLabel="ACCEPTED"></nz-option>&ndash;&gt;-->
+<!--&lt;!&ndash;          <nz-option nzValue="DECLINED" nzLabel="DECLINED"></nz-option>&ndash;&gt;-->
+<!--&lt;!&ndash;        </nz-select>&ndash;&gt;-->
+<!--&lt;!&ndash;      </nz-form-control>&ndash;&gt;-->
+<!--&lt;!&ndash;    </nz-form-item>&ndash;&gt;-->
+
+
+<!--&lt;!&ndash;  </form>&ndash;&gt;-->
+<!--&lt;!&ndash;  </ng-template>&ndash;&gt;-->
+<!--&lt;!&ndash;</nz-modal>&ndash;&gt;-->

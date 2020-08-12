@@ -1,0 +1,77 @@
+<div class="layout-row mt-3 row">
+  <div class="flex  col-md-6 col-lg-6 col-sm-12">
+    <div class="box-container dashboardContent">
+      <div class="header-text">DETAILS STATUTE DES VOITURES</div>
+      <div class="content">
+<!--        <div class="spinnerTop" *ngIf="jobLoading">-->
+<!--          <mat-spinner></mat-spinner>-->
+<!--        </div>-->
+        <div *ngIf="!jobLoading" class="layout-row">
+          <div class="flex highchartContent">
+            <highcharts-chart [Highcharts]="Highcharts" [options]="jobOptions"
+                              [(update)]="updateFlag1"></highcharts-chart>
+          </div>
+          <div class="flex totals">
+            <div class="total-net">{{jobData.count}}</div>
+            <div class="net-diversified">Total Voitures</div>
+            <div>
+              <div class="legend-item" *ngFor="let item of jobData.data; let i = index">
+                <div class="item-color" [style.background]="colors1[i]"></div>
+                <div class="item-value">{{item.y}}</div>
+                <div class="item-label">{{item.name}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!--  <div class="flex col-md-6 col-lg-6 col-sm-12">-->
+  <!--    <div class="box-container dashboardContent">-->
+  <!--      <div class="header-text">TEMPLATE MANAGEMENT</div>-->
+  <!--      <div class="content">-->
+  <!--        <div class="spinnerTop" *ngIf="questionLoading">-->
+  <!--          <mat-spinner></mat-spinner>-->
+  <!--        </div>-->
+  <!--        <div *ngIf="!questionLoading" class="layout-row">-->
+  <!--          <div class="flex highchartContent">-->
+  <!--            <highcharts-chart [Highcharts]="Highcharts" [options]="questionOptions"-->
+  <!--                              [(update)]="updateFlag2"></highcharts-chart>-->
+  <!--          </div>-->
+  <!--          <div class="flex totals">-->
+  <!--            <div class="total-net">{{templateMStatus.count}}</div>-->
+  <!--            <div class="net-diversified">Total Template management</div>-->
+  <!--            <div>-->
+  <!--              <div class="legend-item" *ngFor="let item of templateMStatus.data; let i = index">-->
+  <!--                <div class="item-color" [style.background]="colors2[i]"></div>-->
+  <!--                <div class="item-value">{{item.y}}</div>-->
+  <!--                <div class="item-label">{{item.name}}</div>-->
+  <!--              </div>-->
+  <!--            </div>-->
+  <!--          </div>-->
+  <!--        </div>-->
+
+  <!--      </div>-->
+  <!--    </div>-->
+  <!--  </div>-->
+  <div class="flex  col-md-6 col-lg-6 col-sm-12">
+    <div class="box-container dashboardContent2">
+      <div class="row">
+        <div class="header-text col-6">EXPORTER FILE EXCEL</div>
+        <div class="col-6">
+          <!--        <div class="col-2" >-->
+          <!--          <button nz-button (click)="import()" [nzType]="'primary'" class="ml-1" >Import-->
+          <!--          </button>-->
+          <!--        </div>-->
+
+          <div>
+            <button nz-button (click)="export()" [nzType]="'primary'" class="ml-1">Exporter
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

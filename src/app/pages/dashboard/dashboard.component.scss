@@ -1,0 +1,70 @@
+.header-text{
+  font-size: 16px;
+  color: #4e5e65;
+  letter-spacing: .03em;
+  font-weight: 500;
+  // margin-bottom: 12px;
+}
+
+mat-spinner{
+  margin: auto;
+}
+
+.box-header{
+  font-size:26px;
+  margin-top:26px
+}
+
+.total-net{
+  font-size:58px;
+  color:rgba(0,0,0,.6);
+  // margin-top:10px
+}
+
+.net-diversified{
+  color:rgba(0,0,0,.4);
+  font-size:12px;
+  margin-bottom:10px
+}
+
+.legend-item{
+  margin-right:5px;
+  margin-bottom:10px;
+  width:45%;
+  display:inline-block
+}
+
+.item-color{
+  width:4px;
+  height:32px;
+  float:left;
+  margin-right:7px
+}
+
+.item-value{
+  font-size:20px;
+  margin-top:-6px;
+  margin-left:11px
+}
+
+.item-label{
+  font-size:12px;
+  opacity:.7;
+  margin-left:11px;
+  margin-top:-7px
+}
+.dashboardContent{
+  padding: 24px; height: 305px
+}
+.dashboardContent2{
+  padding: 24px;
+}
+.spinnerTop{
+  margin-top:90px
+}
+.highchartContent{
+  width: 35%;height: 250px;
+}
+.totals{
+  width: 65%;height: 250px;
+}

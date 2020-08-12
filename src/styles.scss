@@ -1,1 +1,161 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+/* You can add global styles to this file, and also import other style files */
+//@import 'app-theme';
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Candara, Calibri, Segoe, Segoe UI, Optima, Arial, sans-serif !important;
+  color: rgba(0,0,0,0.87);
+  font-size: 13px !important;
+}
+
+.layout-row {
+  flex-direction: row;
+  display: flex;
+}
+
+.flex {
+  -webkit-box-flex: 1;
+  box-sizing: border-box;
+  flex: 1;
+}
+
+.box-container{
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.1), 0 4px 5px 0 rgba(0,0,0,.07), 0 1px 10px 0 rgba(0,0,0,.06);
+  background: #fff;
+  border-radius: 4px;
+  position: relative;
+}
+
+.mat-form-field-underline {
+  background-color: rgba(0,0,0,.12) !important;
+}
+
+.add-button{
+  position: absolute;
+  top:-20px;
+  right: 60px;
+
+}
+
+.no-shadow.mat-mini-fab{
+  box-shadow: none !important;
+}
+
+textarea {
+  resize: none;
+  padding: 8px 15px;
+  color: #A9A9A9;
+  border-radius: 4px;
+  background: #F7F7F7;
+  position: relative;
+  border: 1px solid #E5E5E5;
+}
+
+textarea:focus{
+  outline: none;
+}
+
+highcharts-chart{
+  width:100%!important;
+  height:100%!important;
+  margin:0 auto;
+  display:block
+}
+
+.progress-bar{
+  position: absolute;
+  width: 100%;
+  top: 52px;
+}
+
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.mat-cell{
+  overflow: hidden;
+  width:auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+mat-dialog-container{
+  position: relative;
+}
+
+.mat-paginator {
+  background: none;
+}
+
+.mat-table {
+  background: none;
+}
+
+.keyword{
+  // float: left;
+  display: inline-flex;
+  margin-right: 6px;
+  background: #3694ba;
+  border-radius: 16px;
+  color: white;
+  padding: 4px 8px;
+}
+
+.mat-tab-label-active .mat-tab-label-content{
+  color: #0A739E;
+}
+
+
+button:focus{
+  outline : none !important;
+}
+
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 5px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  cursor: pointer;
+}
+
+mat-checkbox label{
+  margin-bottom: 0 !important;
+}
+
+input.mat-chip-input{
+  width: 50px !important;
+  flex: 1 0 50px !important;
+}
+
+.mat-option{
+  height: 42px !important;
+  line-height: 42px !important;
+}
+
+.mat-optgroup-label{
+  margin-bottom: 0 !important;
+}
+
+.reference-detail-dialog .mat-dialog-container {
+  padding: 0;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+

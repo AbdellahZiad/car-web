@@ -1,0 +1,184 @@
+
+<div *ngIf="!isFormCollapsed">
+  <button nz-button (click)="toggleCollapse()" [nzType]="'primary'" class="ml-1" >Filter Data
+  </button>
+</div>
+
+<form nz-form [formGroup]="validateForm" class="ant-advanced-search-form" *ngIf="isCollapse">
+  <div nz-row>
+    <div class="ml-2" nz-col [nzSpan]="5">
+      <nz-form-label> Nom de client</nz-form-label>
+    </div>
+    <div class="ml-2" nz-col [nzSpan]="7">
+      <nz-form-label>Date location</nz-form-label>
+    </div>
+    <div class="ml-2" nz-col [nzSpan]="5">
+      <nz-form-label>Marque voiture</nz-form-label>
+    </div>
+    <div class="ml-2" nz-col [nzSpan]="5">
+      <nz-form-label>Statute voiture</nz-form-label>
+    </div>
+  </div>
+  <div nz-row>
+    <div  class="ml-2" nz-col [nzSpan]="5">
+      <input formControlName="surveyID" nz-input placeholder=""/>
+    </div>
+    <div  class="ml-2" nz-col [nzSpan]="7">
+      <nz-range-picker style="width: 100%" formControlName="submittedOn" [nzFormat]="dateFormat"></nz-range-picker>
+    </div>
+    <div  class="ml-2" nz-col [nzSpan]="5">
+      <input formControlName="agent" nz-input placeholder=""/>
+    </div>
+    <div  class="ml-2" nz-col  [nzSpan]="5">
+      <nz-select style="width: 100%" formControlName="by" nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
+        <nz-option nzLabel="DISPONIBLE" nzValue="DISPONIBLE"></nz-option>
+        <nz-option nzLabel="NON DISPONIBLE" nzValue="NON DISPONIBLE"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+
+  <div nz-row>
+    <div class="ml-2" nz-col [nzSpan]="8">
+      <nz-form-label>Nobmre de jours</nz-form-label>
+    </div>
+    <div class="ml-4" nz-col [nzSpan]="6">
+      <nz-form-label>Status</nz-form-label>
+    </div>
+  </div>
+  <div nz-row>
+    <div class="ml-2" nz-col [nzSpan]="8">
+      <nz-input-number style="width: 50%;" formControlName="scoreMin" nzPrecisionMode="cut" nzPlaceHolder="From"></nz-input-number>
+      <nz-input-number style="width: 50%;" formControlName="scoreMax" nzPrecisionMode="cut" nzPlaceHolder="To"></nz-input-number>
+    </div>
+    <div class="ml-4" nz-col [nzSpan]="6">
+      <nz-select style="width: 100%" formControlName="statusSystem" nzShowSearch nzAllowClear nzPlaceHolder="Select a status">
+        <nz-option nzLabel="DISPONIBLE" nzValue="DISPONIBLE"></nz-option>
+        <nz-option nzLabel="NON DISPONIBLE" nzValue="NON DISPONIBLE"></nz-option>
+      </nz-select>
+    </div>
+  </div>
+  <br>
+
+
+
+  <div nz-row>
+    <div nz-col [nzSpan]="24" class="search-area">
+      <button nz-button [nzType]="'primary'" (click)="searchData()">Search</button>
+      <button nz-button (click)="resetForm()">Clear</button>
+      <button nz-button (click)="resetForm();toggleCollapse()" class="ml-1"  >Close Filter</button>
+      <!--      <a class="collapse" (click)="toggleCollapse()">-->
+      <!--        Collapse-->
+      <!--        <i nz-icon [nzType]="isCollapse ? 'down' : 'up'"></i>-->
+      <!--      </a>-->
+    </div>
+  </div>
+</form>
+<br>
+
+
+<!--  <nz-table #basicTable [nzData]="listOfData2">
+    <thead>
+    <tr>
+      <th>Survey ID</th>
+      <th>Submitted On</th>
+      <th>Agent</th>
+      <th>Score</th>
+      <th>Status</th>
+      <th>By</th>
+      <th>Reason</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of basicTable.data">
+      <td>{{ data.surveyID }}</td>
+      <td>{{ data.submitedOn }}</td>
+      <td>{{ data.agent }}</td>
+      <td>{{ data.score }}</td>
+      <td>{{ data.status }}</td>
+      <td>{{ data.by }}</td>
+      <td>{{ data.reason }}</td>
+      <td>
+        <button nz-button nzType="primary" [nzSize]="'small'"><i nz-icon nzType="eye"></i></button>
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>-->
+
+
+<!--  Go -->
+<nz-collapse>
+  <nz-collapse-panel [nzHeader]="'Filter sur toutes les donnees de la base'" [nzActive]="true" [nzDisabled]="false">
+    <p style="margin:0;">
+      <nz-table #basicTable [nzData]="listOfData">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Nom de Client</th>
+          <th>CIN | Passport</th>
+          <th>Numéro de Téléphone</th>
+          <th>Date Debut</th>
+          <th>Date Fin</th>
+          <th>Nombre de jours</th>
+          <th>Prix</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.id }}</td>
+          <td>{{ data.name }}</td>
+          <td>{{ data.cin }}</td>
+          <td>{{ data.tel }}</td>
+          <td>{{ data.dateDebut | date: "dd-mm-yyyy HH:MM" }}</td>
+          <td>{{ data.dateFin | date: "dd-mm-yyyy HH:MM"}}</td>
+          <td>{{ data.numberDay  }}</td>
+          <td>{{ data.total }}</td>
+          <td>
+            <button nz-button nzType="primary" [nzSize]="'small'"><i nz-icon nzType="eye"></i></button>
+            &nbsp;
+            <button nz-button (click)="showModal(data)" nzType="sucess" [nzSize]="'small'"><i nz-icon nzType="edit"></i>
+            </button>
+            &nbsp;
+            <button nz-button (click)="deleteUser(data.id)" nzType="danger" [nzSize]="'small'"><i nz-icon nzType="delete"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </p>
+  </nz-collapse-panel>
+</nz-collapse>
+
+
+<!-- END -->
+
+<!--  <p-table [value]="listOfDataFake" [paginator]="true" [rows]="10">-->
+<!--    <ng-template pTemplate="header">-->
+<!--      <tr>-->
+<!--        <th>Survey ID</th>-->
+<!--        <th>Submitted On</th>-->
+<!--        <th>Agent</th>-->
+<!--        <th>Score</th>-->
+<!--        <th>Status</th>-->
+<!--        <th>By</th>-->
+<!--        <th>Reason</th>-->
+<!--        <th>Actions</th>-->
+<!--      </tr>-->
+<!--    </ng-template>-->
+<!--    <ng-template pTemplate="body" let-data>-->
+<!--      <tr>-->
+<!--        <td>{{ data.surveyID }}</td>-->
+<!--        <td>{{ data.submitedOn }}</td>-->
+<!--        <td>{{ data.agent }}</td>-->
+<!--        <td>{{ data.score }}</td>-->
+<!--        <td>{{ data.status }}</td>-->
+<!--        <td>{{ data.by }}</td>-->
+<!--        <td>{{ data.reason }}</td>-->
+<!--        <td>-->
+<!--          <button nz-button nzType="primary" [nzSize]="'small'"><i nz-icon nzType="eye"></i></button>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--    </ng-template>-->
+<!--  </p-table>-->
+

@@ -56,15 +56,15 @@ export class ClientManagementComponent implements OnInit {
       id: null,
       name: [null, [Validators.required]],
       cin: [null],
-      tel: [null, [Validators.required]],
+      tel: [null, [Validators.required,Validators.pattern(new RegExp("[0-9 ]{12}"))]],
       dateDebut: [null, [Validators.required]],
       dateFin: [null, [Validators.required]],
-      numberDay: [null,[Validators.required]],
-      total: [null,[Validators.required]],
+      numberDay: [null,[Validators.required,Validators.pattern(new RegExp("[0-9]"))]],
+      total: [null,[Validators.required,Validators.pattern(new RegExp("[0-9 ]"))]],
       nameCdt: [null,[Validators.required]],
       livraison: [null,[Validators.required]],
       recuperation: [null,[Validators.required]],
-      serchV: [null],
+      serchV: [null,[Validators.required]],
     });
 
     // this.getAllUsers();

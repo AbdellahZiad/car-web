@@ -2,6 +2,7 @@ import {Component,  OnInit} from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { Subscription} from "rxjs";
 import {DashbordService} from "../welcome/services/dashbord.service";
+import {NzMessageService, NzModalService} from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,14 +18,19 @@ export class DashboardComponent implements OnInit {
   updateFlag1: boolean = false;
   updateFlag2: boolean = false;
   jobData;
+  isVisible = false;
   templateMStatus;
   jobOptions;
   questionOptions;
+  fileExcel:any;
+
   timer: Subscription;
   colors1 = ['#F04545', '#1C81D8', '#7CC76C', '#F04545'];
   colors2 = ['#F0AC45', '#4cbeb5', '#F04545', '#999999', '#7CC76C', '#1C81D8'];
 
-  constructor(private dashboardService: DashbordService) {
+  constructor(private dashboardService: DashbordService,
+              private msg: NzMessageService,
+              private modal: NzModalService,) {
   }
 
   ngOnInit() {
@@ -188,12 +194,97 @@ export class DashboardComponent implements OnInit {
   //   if (this.timer) this.timer.unsubscribe();
   // }
 
-  import() {
+  fileChange = (file) => {
+    this.fileExcel = file;
+    let isValid = (file.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    if (!isValid) {
+      this.msg.error('You can only upload Excel file!');
+      file.status = 'error'
+    } else {
 
+      this.dashboardService.uploadFile(this.fileExcel)
+        .subscribe(data => {
+            this.fileExcel.status = 'done';
+            console.log("------------> response ",data);
+            if (data.toLowerCase()!=='done')
+              this.msg.error(data);
+            else
+              this.msg.success('Template uploaded successfully');
+
+          },
+          error =>
+          {
+            this.fileExcel.status = "error";
+            console.log("error",error);
+            // this.msg
+            //   .error('ERROR : '+this.message()
+            //     .replace(new RegExp('\n', 'g'), "<br />"));
+
+            this.modal.error({
+              nzTitle: 'Error',
+              nzContent: JSON.parse(error.error).message.replace(new RegExp('\n', 'g'), "<br />"),
+            });
+
+            // this.msg.create(
+            //   'error',
+            //   'Erreur: ' + error.message
+            // );
+
+          });
+      // this.fileExcel.status = 'done'
+    }
+
+    this.isVisible = false;
   }
 
   export() {
     this.dashboardService.export();
 
+  }
+
+
+  import(): void {
+
+    console.log("OKey");
+    let isValid = (this.fileExcel.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    if (!isValid) {
+      this.msg.error('You can only upload Excel file!');
+      this.fileExcel.status = 'error'
+    } else {
+
+      this.dashboardService.uploadFile(this.fileExcel)
+        .subscribe(data => {
+            this.fileExcel.status = 'done';
+            console.log("------------> response ",data);
+            if (data.toLowerCase()!=='done')
+              this.msg.error(data);
+            else
+              this.msg.success('Template uploaded successfully');
+
+
+          },
+          error =>
+          {
+            this.fileExcel.status = "error";
+            console.log("error",error);
+            // this.msg
+            //   .error('ERROR : '+this.message()
+            //     .replace(new RegExp('\n', 'g'), "<br />"));
+
+            this.modal.error({
+              nzTitle: 'Error',
+              nzContent: JSON.parse(error.error).message.replace(new RegExp('\n', 'g'), "<br />"),
+            });
+
+            // this.msg.create(
+            //   'error',
+            //   'Erreur: ' + error.message
+            // );
+
+          });
+      // this.fileExcel.status = 'done'
+    }
+
+    this.isVisible = false;
   }
 }

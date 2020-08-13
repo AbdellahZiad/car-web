@@ -3,9 +3,9 @@
     <div class="box-container dashboardContent">
       <div class="header-text">DETAILS STATUTE DES VOITURES</div>
       <div class="content">
-<!--        <div class="spinnerTop" *ngIf="jobLoading">-->
-<!--          <mat-spinner></mat-spinner>-->
-<!--        </div>-->
+        <!--        <div class="spinnerTop" *ngIf="jobLoading">-->
+        <!--          <mat-spinner></mat-spinner>-->
+        <!--        </div>-->
         <div *ngIf="!jobLoading" class="layout-row">
           <div class="flex highchartContent">
             <highcharts-chart [Highcharts]="Highcharts" [options]="jobOptions"
@@ -58,17 +58,24 @@
   <div class="flex  col-md-6 col-lg-6 col-sm-12">
     <div class="box-container dashboardContent2">
       <div class="row">
-        <div class="header-text col-6">EXPORTER FILE EXCEL</div>
+        <div class="header-text col-6">EXPORT & IMPORT FILE EXCEL</div>
         <div class="col-6">
           <!--        <div class="col-2" >-->
           <!--          <button nz-button (click)="import()" [nzType]="'primary'" class="ml-1" >Import-->
           <!--          </button>-->
           <!--        </div>-->
 
-          <div>
-            <button nz-button (click)="export()" [nzType]="'primary'" class="ml-1">Exporter
+          <span>
+            <button nz-button (click)="export()" [nzType]="'primary'" class="ml-1">Export
             </button>
-          </div>
+          </span>
+          <span>
+                        <nz-upload [nzBeforeUpload]="fileChange" [nzShowUploadList]="false">
+
+     <button nz-button (click)="import()" [nzType]="'primary'" class="ml-1">Import</button>
+  </nz-upload>
+
+          </span>
         </div>
       </div>
     </div>

@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {UserModel} from "../../model/UserModel";
 import {NzMessageService, NzModalService} from "ng-zorro-antd";
 import {VoitureService} from "../../services/voiture.service";
+import {VoitureModel} from "../../model/VoitureModel";
+import {ClientModel} from "../../model/ClientModel";
+import {EntretienModel} from "../../model/EntretienModel";
 
 @Component({
   selector: 'app-vehicle-management',
@@ -12,7 +14,12 @@ import {VoitureService} from "../../services/voiture.service";
 export class VehicleManagementComponent implements OnInit {
 
   isVisible = false;
+  isVisible2 = false;
   listOfData: any;
+  listOfData3: ClientModel[];
+  listOfData4: VoitureModel;
+  entretien:EntretienModel[];
+  clients: any[];
   id: any;
   mode: Boolean;
   submitted = false;
@@ -20,13 +27,19 @@ export class VehicleManagementComponent implements OnInit {
   passwordVisible = false;
   password?: string;
   search: any;
+  isUpdate: boolean = false;
+  dispo = "OUI"
   // [
   // {user: 'Admin', email: 'admin@scor.com', role: 'admin', creationDate: '07/05/2017', validUntil: '', active: 'Y'},
   // {user: 'Admin', email: 'admin@scor.com', role: 'admin', creationDate: '09/11/2019', validUntil: '09/11/2024', active: 'Y'},
   // {user: 'Admin', email: 'admin@scor.com', role: 'admin', creationDate: '07/12/2018', validUntil: '31/12/2020', active: 'Y'}];
   validateForm!: FormGroup;
 
-  selectedUser: UserModel;
+
+  @Input() voitures: any; // decorate the property with @Input()
+  @Input() newVoiture: boolean = true; // decorate the property with @Input()
+
+  selectedUser: VoitureModel;
   roles: [
     {
       id: 1,
@@ -49,6 +62,11 @@ export class VehicleManagementComponent implements OnInit {
       id: '',
       marque: [null, [Validators.required]],
       matricule: [null, [Validators.required]],
+      prixUnitaireTTC: [null, [Validators.required]],
+      totalJours: [null,],
+      total: [null,],
+      totalEntretien: [null,],
+      disponible: [null,],
       // checkPassword: [null, [Validators.required, this.confirmationValidator]],
       // fullName: [null, [Validators.required]],
       // role: [null],
@@ -58,6 +76,7 @@ export class VehicleManagementComponent implements OnInit {
       // active: '',
     });
 
+    this.newVoiture = true;
     this.getAllUsers();
 
   }
@@ -74,6 +93,7 @@ export class VehicleManagementComponent implements OnInit {
       this.validateForm.reset();
       this.title = "Nouvelle Voiture";
     } else {
+      this.isUpdate = true;
       this.selectedUser = user;
       this.validateForm.patchValue(user);
       this.title = "Modifier Voiture";
@@ -161,7 +181,7 @@ export class VehicleManagementComponent implements OnInit {
       .subscribe(
         data => {
           console.log("---data", data);
-          this.listOfData = data;
+          this.voitures = data;
 
         }
       )
@@ -193,8 +213,26 @@ export class VehicleManagementComponent implements OnInit {
   searchData() {
     console.log("-------> search Data")
     this.voitureService.search(this.search).subscribe(
-      data=> this.listOfData = data
+      data=> this.voitures = data
     )
+  }
+
+  ShowDetails(id: any) {
+
+    this.voitureService.getDetailsVoiture(id)
+      .subscribe((data:VoitureModel) =>{
+        console.log("Data Details = ",data);
+        this.listOfData3 = data.client;
+        this.listOfData4 = data;
+
+        console.log("Data listOfData4 = ",this.listOfData4);
+
+        this.entretien = data.entretienAndFixes;
+        console.log("Data listOfData3 = ",this.listOfData3);
+        console.log("Data entretien = ",this.entretien);
+
+      })
+    this.isVisible2 = true
   }
 }
 

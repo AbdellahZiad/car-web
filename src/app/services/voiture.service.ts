@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {endpoint} from "../../environments/environment";
-import {UserModel} from "../model/UserModel";
 import {HttpClient} from "@angular/common/http";
+import {VoitureModel} from "../model/VoitureModel";
 
 @Injectable({
   providedIn: 'root'
 })
 export class VoitureService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
 
   getAllVoiture() {
@@ -16,20 +17,25 @@ export class VoitureService {
   }
 
   deleteVoiture(id: any) {
-    console.log("id from service = ",id);
-    return this.http.delete(endpoint + "api/voiture/delete/"+id,
+    console.log("id from service = ", id);
+    return this.http.delete(endpoint + "api/voiture/delete/" + id,
       {responseType: 'text'});
 
   }
 
-  saveVoiture(user: UserModel) {
-    console.log("ADD or SAVE USER ",user);
+  saveVoiture(user: VoitureModel) {
+    console.log("ADD or SAVE USER ", user);
     return this.http.post(endpoint + "api/voiture/add", user);
 
   }
 
   search(search: any) {
-    return this.http.get(endpoint + "api/voiture/search?filter="+search);
+    return this.http.get(endpoint + "api/voiture/search?filter=" + search);
+
+  }
+
+  getDetailsVoiture(id: any) {
+    return this.http.get(endpoint + "api/voiture/details/" + id);
 
   }
 }

@@ -37,6 +37,7 @@ import {ClientManagementComponent} from '../client-management/client-management.
 import {ClientMonitoringComponent} from '../client-monitoring/client-monitoring.component';
 import {DashboardComponent} from "../dashboard/dashboard.component";
 import {HighchartsChartModule} from "highcharts-angular";
+import { EntretienComponent } from '../entretien/entretien.component';
 
 
 @NgModule({
@@ -44,7 +45,7 @@ import {HighchartsChartModule} from "highcharts-angular";
     NzButtonModule, FormsModule, ReactiveFormsModule, NzCollapseModule, NzFormModule, NzInputNumberModule, NzTabsModule,
     NzIconModule, NzSelectModule, NzDatePickerModule, TableModule, NzInputModule, NzSpinModule, TabViewModule, DialogModule, ButtonModule, CarouselModule, ScrollPanelModule, DataViewModule, DropdownModule, PanelModule, HighchartsChartModule
   ],
-  declarations: [DashboardComponent,UsersManagementComponent, VehicleManagementComponent, VehicleMonitoringComponent, SearchAdvancedComponent, ClientManagementComponent, ClientMonitoringComponent],
+  declarations: [DashboardComponent,UsersManagementComponent, VehicleManagementComponent, VehicleMonitoringComponent, SearchAdvancedComponent, ClientManagementComponent, ClientMonitoringComponent, EntretienComponent],
   exports: [ClientManagementComponent],
   providers: [NzMessageService, SurveyService]
 })

@@ -1,21 +1,19 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {VoitureModel} from "../../model/VoitureModel";
+import {EntretienModel} from "../../model/EntretienModel";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserModel} from "../../model/UserModel";
 import {NzMessageService, NzModalService} from "ng-zorro-antd";
-import {ClientService} from "../../services/client.service";
-import {VoitureModel} from "../../model/VoitureModel";
-import {ClientModel} from "../../model/ClientModel";
-import {VoitureService} from "../../services/voiture.service";
+import {EntretienService} from "../../services/entretien.service";
 
 @Component({
-  selector: 'app-client-management',
-  templateUrl: './client-management.component.html',
-  styleUrls: ['./client-management.component.scss']
+  selector: 'app-entretien',
+  templateUrl: './entretien.component.html',
+  styleUrls: ['./entretien.component.scss']
 })
-export class ClientManagementComponent implements OnInit {
+export class EntretienComponent implements OnInit {
 
   isVisible = false;
-  isVisible2 = false;
   // listOfData: any;
   id: any;
   mode: Boolean;
@@ -28,8 +26,8 @@ export class ClientManagementComponent implements OnInit {
   search: any;
   voiturList: VoitureModel [];
 
-  @Input() clients: ClientModel[]; // decorate the property with @Input()
-  @Input() newClient: boolean = true; // decorate the property with @Input()
+  @Input() entretiens: EntretienModel[]; // decorate the property with @Input()
+  @Input() newEntretien: boolean = true; // decorate the property with @Input()
 
   // [
   // {user: 'Admin', email: 'admin@scor.com', role: 'admin', creationDate: '07/05/2017', validUntil: '', active: 'Y'},
@@ -50,41 +48,18 @@ export class ClientManagementComponent implements OnInit {
     }
   ];
   title: any;
-  showV: boolean = false;
-  listOfData3: VoitureModel[];
-  listOfData4: any;
+  private showV: boolean = false;
 
 
   constructor(private msg: NzMessageService,
               private modal: NzModalService,
               private fb: FormBuilder,
-              private clientService: ClientService,
-              private voitureService: VoitureService) {
+              private entretienService: EntretienService) {
 
     this.validateForm = this.fb.group({
       id: null,
-      name: [null, [Validators.required]],
-      cin: [null],
-      tel: [null, [Validators.required, Validators.pattern(new RegExp("[0-9 ]{12}"))]],
-      dateDebut: [null, [Validators.required]],
-      dateFin: [null, [Validators.required]],
-      name1: [null],
-      cin1: [null],
-      tel1: [null, ],
-      numberDay: [null, ],
-      total: [null, ],
-      nameCdt: [null,],
-      livraison: [null,],
-      recuperation: [null, ],
-      matricule: [null, ],
-      nat :  [null],
-      nPermis : [null],
-      adressMaroc : [null, ],
-      adressEtranger : [null, ],
-      nat1 :  [null],
-      nPermis1 : [null],
-      adressMaroc1 : [null, ],
-      adressEtranger1 : [null, ],
+      entretieAndRepar: [null, [Validators.required]],
+      coute: [null,[Validators.required]]
     });
 
     // this.getAllUsers();
@@ -93,7 +68,7 @@ export class ClientManagementComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("------> LIST CLIENT ", this.clients);
+    console.log("------> LIST Entretien ",this.entretiens);
     this.getAllUsers();
     this.getVoitureList();
 
@@ -105,14 +80,12 @@ export class ClientManagementComponent implements OnInit {
     if (user == null) {
       this.pw = false;
       this.validateForm.reset();
-      this.title = "Nouveau Client";
-      this.addV = true;
+      this.title = "Nouveau Entretien";
     } else {
       this.selectedUser = user;
       this.validateForm.patchValue(user);
-      this.title = "Modifier Client";
+      this.title = "Modifier Entretien";
       this.pw = true;
-      this.addV = false;
     }
     this.isVisible = true;
 
@@ -121,27 +94,25 @@ export class ClientManagementComponent implements OnInit {
   resetForm(): void {
     this.validateFormSearch.reset();
   }
-
   handleOk(): void {
 
     console.log("Form data OK = ", this.validateForm.valid);
     this.selectedUser = this.validateForm.value;
 
     if (this.validateForm.valid) {
-      this.clientService.saveClient(this.validateForm.value)
+      this.entretienService.saveEntretien(this.validateForm.value)
         .subscribe(
-          data => {
+          data =>{
             this.msg.success("User saved successfully");
             this.showV = true;
             this.getAllUsers()
 
-          }, error => {
+          },error => {
             this.msg.error(error.error.message);
             console.log("--->ERROR", error);
             this.getAllUsers()
           }
         );
-      this.twoCond = false;
       this.isVisible = false;
       this.validateForm.reset();
     } else {
@@ -176,7 +147,7 @@ export class ClientManagementComponent implements OnInit {
 
   private confirmDelete() {
 
-    this.clientService.deleteClient(this.id)
+    this.entretienService.deleteEntretien(this.id)
       .subscribe(
         data => {
           console.log("---> data after delete", data);
@@ -199,11 +170,11 @@ export class ClientManagementComponent implements OnInit {
   }
 
   private getAllUsers() {
-    this.clientService.getAllClient()
+    this.entretienService.getAllEntretien()
       .subscribe(
-        (data: ClientModel[]) => {
+        (data:EntretienModel[]) => {
           console.log("---data", data);
-          this.clients = data;
+          this.entretiens = data;
 
         }
       )
@@ -223,8 +194,7 @@ export class ClientManagementComponent implements OnInit {
     }
     return {};
   };
-  twoCond: boolean = false;
-  addV: boolean = true;
+
 
 
   getCaptcha(e: MouseEvent): void {
@@ -243,69 +213,34 @@ export class ClientManagementComponent implements OnInit {
   }
 
   searchData() {
-    console.log("-----------> SEARCH", this.search);
-    this.clientService.search(this.search).subscribe(
-      (data: ClientModel[]) => this.clients = data
+    console.log("-----------> SEARCH",this.search);
+    this.entretienService.search(this.search).subscribe(
+      (data:EntretienModel[])=> this.entretiens = data
     )
 
   }
 
   getVoiture() {
-    console.log("----->search", this.search);
+    console.log("----->search",this.search);
   }
 
   private getVoitureList() {
-    this.clientService.getAllVoiture().subscribe(
-      (data: VoitureModel[]) => {
+    this.entretienService.getAllVoiture().subscribe(
+      (data:VoitureModel[])=>{
         this.voiturList = data
-        console.log("----------> dataV", data)
+        console.log("----------> dataV",data)
       }
+
     )
   }
 
-  onKey(event: any) {
-    console.log("---------> event.target.value", event.target.value);
+  onKey(event:any) {
+    console.log("---------> event.target.value",event.target.value);
     this.voiturList
-      .find(ele => ele.marque == event.target.value || ele.matricule == event.target.matricule)
+      .find(ele => ele.marque==event.target.value || ele.matricule==event.target.matricule)
 
-    console.log("-----------------> FIIIND", this.voiturList
-      .find(ele => ele.marque == event.target.value || ele.matricule == event.target.matricule))
-  }
-
-  showDetails(id: any) {
-
-    this.clientService.getDetailsClients(id)
-      .subscribe((data: ClientModel) => {
-        console.log("Data Details = ", data);
-        this.listOfData3 = data.vehicleList;
-        // this.listOfData4 = data;
-
-        console.log("Data listOfData4 = ", this.listOfData4);
-
-        // this.entretien = data.entretienAndFixes;
-        console.log("Data listOfData3 = ", this.listOfData3);
-        // console.log("Data entretien = ",this.entretien);
-
-      })
-    this.isVisible2 = true
-  }
-
-  searchDataV() {
-    console.log("-------> search Data", this.search)
-    this.voitureService.search(this.search).subscribe(
-      (data:VoitureModel[]) =>{
-        console.log("---------> DATA FILTER",data)
-        if (data)
-        this.listOfData3 = data;
-        else
-          this.listOfData3 = []
-
-      }
-    )
-  }
-
-  addConducteur() {
-    this.twoCond = true;
+    console.log("-----------------> FIIIND",this.voiturList
+      .find(ele => ele.marque==event.target.value || ele.matricule==event.target.matricule))
   }
 }
 

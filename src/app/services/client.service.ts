@@ -33,4 +33,9 @@ export class ClientService {
     return this.http.get(endpoint + "api/client/search?filter="+search);
 
   }
+
+  getDetailsClients(id: any) {
+    return this.http.get(endpoint + "api/client/details/"+id);
+
+  }
 }

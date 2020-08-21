@@ -9,6 +9,14 @@ body {
   color: rgba(0,0,0,0.87);
   font-size: 13px !important;
 }
+tr{
+  cursor: pointer;
+}
+
+::ng-deep body .ui-tabview.ui-tabview-top .ui-tabview-nav li.ui-state-active:hover, body .ui-tabview.ui-tabview-bottom .ui-tabview-nav li.ui-state-active:hover, body .ui-tabview.ui-tabview-left .ui-tabview-nav li.ui-state-active:hover, body .ui-tabview.ui-tabview-right .ui-tabview-nav li.ui-state-active:hover {
+  border: 1px solid #005b9f;
+  background-color: #005b9f;
+}
 
 .layout-row {
   flex-direction: row;

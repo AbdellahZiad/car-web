@@ -15,12 +15,28 @@ export class VehicleManagementComponent implements OnInit {
 
   isVisible = false;
   isVisible2 = false;
+  isCSS = false;
   listOfData: any;
+  id;
   listOfData3: ClientModel[];
-  listOfData4: VoitureModel;
+  listOfData4: VoitureModel = {
+    id : null,
+    marque : '',
+    matricule : '',
+    model : '',
+    prixUnitaireTTC : '',
+    total : '',
+    totalEntretien : '',
+    totalJours : '',
+    dispo : '',
+    disponible : '',
+    client : [],
+    dateFin:null,
+    entretienAndFixes : [],
+
+  };
   entretien:EntretienModel[];
   clients: any[];
-  id: any;
   mode: Boolean;
   submitted = false;
   pw: boolean = false;
@@ -210,7 +226,7 @@ export class VehicleManagementComponent implements OnInit {
   showOrHidePw() {
   }
 
-  searchData() {
+  searchData(eve?:any) {
     console.log("-------> search Data")
     this.voitureService.search(this.search).subscribe(
       data=> this.voitures = data
@@ -232,7 +248,12 @@ export class VehicleManagementComponent implements OnInit {
         console.log("Data entretien = ",this.entretien);
 
       })
+    this.id = id;
     this.isVisible2 = true
+  }
+
+  checkCSS(x:boolean) {
+    this.isCSS = x;
   }
 }
 

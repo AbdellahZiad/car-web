@@ -1,10 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {VoitureModel} from "../../model/VoitureModel";
 import {EntretienModel} from "../../model/EntretienModel";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserModel} from "../../model/UserModel";
 import {NzMessageService, NzModalService} from "ng-zorro-antd";
 import {EntretienService} from "../../services/entretien.service";
+import { EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-entretien',
@@ -15,7 +17,6 @@ export class EntretienComponent implements OnInit {
 
   isVisible = false;
   // listOfData: any;
-  id: any;
   mode: Boolean;
   submitted = false;
   pw: boolean = false;
@@ -28,6 +29,9 @@ export class EntretienComponent implements OnInit {
 
   @Input() entretiens: EntretienModel[]; // decorate the property with @Input()
   @Input() newEntretien: boolean = true; // decorate the property with @Input()
+  @Input() id; // decorate the property with @Input()
+  @Output() concat = new EventEmitter<any>();
+
 
   // [
   // {user: 'Admin', email: 'admin@scor.com', role: 'admin', creationDate: '07/05/2017', validUntil: '', active: 'Y'},
@@ -36,7 +40,7 @@ export class EntretienComponent implements OnInit {
   validateForm!: FormGroup;
   validateFormSearch: FormGroup;
   filterForm: FormGroup;
-  selectedUser: UserModel;
+  selectedUser: EntretienModel;
   roles: [
     {
       id: 1,
@@ -77,6 +81,7 @@ export class EntretienComponent implements OnInit {
   showModal(user): void {
     console.log("user = ", user);
 
+    this.concat.emit(true)
     if (user == null) {
       this.pw = false;
       this.validateForm.reset();
@@ -100,7 +105,7 @@ export class EntretienComponent implements OnInit {
     this.selectedUser = this.validateForm.value;
 
     if (this.validateForm.valid) {
-      this.entretienService.saveEntretien(this.validateForm.value)
+      this.entretienService.saveEntretien(this.validateForm.value,this.id)
         .subscribe(
           data =>{
             this.msg.success("User saved successfully");
@@ -212,7 +217,7 @@ export class EntretienComponent implements OnInit {
     // });
   }
 
-  searchData() {
+  searchData(eve?:any) {
     console.log("-----------> SEARCH",this.search);
     this.entretienService.search(this.search).subscribe(
       (data:EntretienModel[])=> this.entretiens = data

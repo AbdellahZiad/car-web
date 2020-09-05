@@ -13,6 +13,7 @@ export class VoitureModel {
   dispo:any;
   disponible:any;
   client: ClientModel[];
+  dateFin:any;
   entretienAndFixes:EntretienModel[];
 
 
@@ -29,7 +30,7 @@ export class VoitureModel {
     this.dispo=null;
     this.disponible=null;
     this.client = [];
+    this.dateFin = null;
     this.entretienAndFixes=[];
-
   }
 }

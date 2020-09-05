@@ -13,11 +13,12 @@
 <div class="row">
   <!-- Search form -->
   <div class="col-10">
-    <input [(ngModel)]="search" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    <input [(ngModel)]="search" (keyup)="searchData($event)" class="form-control" type="text" placeholder="Search" aria-label="Search">
   </div>
   <div class="col-2">
     <button (click)="searchData()" style="width: 100%;height: 100%;" nz-button [nzType]="'primary'">Search</button>
   </div>
+
 </div>
 
 <br>
@@ -29,10 +30,11 @@
   <tr>
     <th>Id</th>
     <th>Nom de Client</th>
-    <!--    <th>CIN | Passport</th>-->
     <th>Numéro de Téléphone</th>
     <th>Date Debut</th>
     <th>Date Fin</th>
+    <th>Marque</th>
+    <th>Matricule</th>
     <th>Nombre de jours</th>
     <th>Prix</th>
     <th >Action</th>
@@ -41,11 +43,12 @@
   <tbody>
   <tr *ngFor="let data of basicTable.data">
     <td (click)="showModal(data)">{{ data.id }}</td>
-    <td (click)="showModal(data)">{{ data.name }}</td>
-    <!--    <td>{{ data.cin }}</td>-->
+    <td (click)="showModal(data)">{{ data.nom }} {{ data.prenom }}</td>
     <td (click)="showModal(data)">{{ data.tel }}</td>
     <td (click)="showModal(data)">{{ data.dateDebut | date: "dd-MM-yyyy HH:MM" }}</td>
     <td (click)="showModal(data)">{{ data.dateFin | date: "dd-MM-yyyy HH:MM"}}</td>
+    <td>{{ data.marque }}</td>
+    <td>{{ data.matricule }}</td>
     <td (click)="showModal(data)">{{ data.numberDay  }}</td>
     <td (click)="showModal(data)">{{ data.total }}</td>
     <td>
@@ -70,9 +73,16 @@
     <nz-tabset>
       <nz-tab nzTitle="Conducteur 1">
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">Nom de Client</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="nom">Nom</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir Nom De Client !">
-            <input nz-input formControlName="name" id="name"/>
+            <input nz-input formControlName="nom" id="nom"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="prenom">Prenom </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir Nom De Client !">
+            <input nz-input formControlName="prenom" id="prenom"/>
           </nz-form-control>
         </nz-form-item>
 
@@ -92,14 +102,14 @@
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dateDebut" nzRequired>Date Debut</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateDebut!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateDebut!">
             <nz-date-picker style="width: 100%" formControlName="dateDebut"></nz-date-picker>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dateFin" nzRequired>Date Fin</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <nz-date-picker style="width: 100%" formControlName="dateFin"></nz-date-picker>
           </nz-form-control>
         </nz-form-item>
@@ -108,7 +118,7 @@
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nat" nzRequired>Nationalité</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <input nz-input formControlName="nat" id="nat"/>
           </nz-form-control>
         </nz-form-item>
@@ -116,15 +126,21 @@
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nPermis" nzRequired>Permis de Conduire N°</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <input nz-input formControlName="nPermis" id="nPermis"/>
           </nz-form-control>
         </nz-form-item>
 
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dateFinPermis" nzRequired>Délivré le</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+            <nz-date-picker style="width: 100%" formControlName="dateFinPermis"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="adressMaroc" nzRequired>Addrese Maroc</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <input nz-input formControlName="adressMaroc" id="adressMaroc"/>
           </nz-form-control>
         </nz-form-item>
@@ -132,14 +148,14 @@
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="adressEtranger" nzRequired>Addrese Etranger</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <input nz-input formControlName="adressEtranger" id="adressEtranger"/>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dateFin" nzRequired>Add Conducteur</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <i (click)="addConducteur()" style=";cursor: pointer;margin-left: 4%; font-size: 164%;color: #007090;" nz-icon nzType="plus-circle" nzTheme="outline"></i>
           </nz-form-control>
         </nz-form-item>
@@ -147,9 +163,16 @@
 
       <nz-tab  *ngIf="twoCond" nzTitle="Conducteur 2">
         <nz-form-item>
-          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name1">Nom de Client</nz-form-label>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="nom1">Nom</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir Nom De Client !">
-            <input nz-input formControlName="name1" id="name1"/>
+            <input nz-input formControlName="nom1" id="nom1"/>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="prenom1">Prenom</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir Nom De Client !">
+            <input nz-input formControlName="prenom1" id="prenom1"/>
           </nz-form-control>
         </nz-form-item>
 
@@ -170,28 +193,35 @@
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nat1" nzRequired>Nationalité</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <input nz-input formControlName="nat1" id="nat1"/>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="nPermis1" nzRequired>Permis de Conduire 2 N°</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <input nz-input formControlName="nPermis1" id="nPermis1"/>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="dateFinPermis1" nzRequired>Délivré le</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+            <nz-date-picker style="width: 100%" formControlName="dateFinPermis1"></nz-date-picker>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="adressMaroc1" nzRequired>Adresse Maroc</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <input nz-input formControlName="adressMaroc1" id="adressMaroc1"/>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="adressEtranger2" nzRequired>Adresse Etranger</nz-form-label>
-          <nz-form-control [nzSm]="18" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
+          <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir dateFin!">
             <input nz-input formControlName="adressEtranger2" id="adressEtranger2"/>
           </nz-form-control>
         </nz-form-item>
@@ -226,14 +256,14 @@
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="livraison">Livraison</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir N° Immatriculation de voiture">
-            <input nz-input (keyup)="onKey($event)" placeholder="N° Immatriculation" formControlName="livraison" id="livraison"/>
+            <input nz-input (keyup)="onKey($event)" placeholder="Lieu de départ" formControlName="livraison" id="livraison"/>
           </nz-form-control>
         </nz-form-item>
 
         <nz-form-item>
           <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="recuperation">Recuperation</nz-form-label>
           <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="Veuillez Saisir N° Immatriculation de voiture">
-            <input nz-input (keyup)="onKey($event)" placeholder="N° Immatriculation" formControlName="recuperation" id="recuperation"/>
+            <input nz-input (keyup)="onKey($event)" placeholder="Lieu de recuperation" formControlName="recuperation" id="recuperation"/>
           </nz-form-control>
         </nz-form-item>
 
@@ -284,60 +314,76 @@
 </nz-modal>
 
 <p-dialog [style]="{'width':'1300px'}" header="Afficher les détails du voiture" [(visible)]="isVisible2">
-  <div class="row">
-    <!-- Search form -->
-    <div class="col-10">
-      <button style="    height: 42px;width: 24%;background: #383c3e;border: 1px #383c3e solid;" nz-button [nzType]="'primary'"> Voitures louées
-        par le client
-      </button>
-    </div>
 
-  </div>
-  <br/>
-  <div class="container-fluid">
+<!--  <div class="container-fluid">-->
 
-    <div class="row">
-      <!-- Search form -->
-      <div class="col-10">
-        <input [(ngModel)]="search" class="form-control" type="text" placeholder="Search" aria-label="Search">
+  <p-tabView class="ui-window-panel" [controlClose]="true">
+
+    <p-tabPanel class="tab-pane fade" header="Voitures louées par le client">
+      <div class="container-fluid">
+        <app-voture-details
+          [voitureList]="listOfData3"
+        >
+        </app-voture-details>
+
+
       </div>
-      <div class="col-2">
-        <button (click)="searchDataV()" style="width: 100%;height: 100%;" nz-button [nzType]="'primary'">Search</button>
-      </div>
-    </div>
+    </p-tabPanel>
 
-    <nz-table #basicTable [nzData]="listOfData3">
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Marque</th>
-        <th>Imatriculation</th>
-        <th>Prix unitaire TTC</th>
-        <th>Nombre de Jours</th>
-        <th>Total</th>
-        <th>TOTAL ENTRETIEN</th>
-        <th>Disponibilité</th>
-        <!--    <th>Company Name</th>-->
-        <!--    <th>Role</th>-->
-        <!--    <th>Creation date</th>-->
-        <!--    <th>Active</th>-->
-        <!--    <th>Actions</th>-->
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let data of basicTable.data">
-        <td>{{ data.id }}</td>
-        <td>{{ data.marque }}</td>
-        <td>{{ data.matricule }}</td>
-        <td>{{ data.prixUnitaireTTC }}</td>
-        <td>{{ data.totalJours }}</td>
-        <td>{{ data.total }}</td>
-        <td>{{ data.totalEntretien }}</td>
-        <td>{{ data.dispo }}</td>
-      </tr>
-      </tbody>
-    </nz-table>
-  </div>
+    <p-tabPanel class="tab-pane fade" header="Total">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <label> Nom complet du client: </label>
+          </div>
+          <div class="col-md-6">
+            <label>
+              <input class="inp" type="text" disabled value="{{totalData.nom}} {{totalData.prenom}}">
+            </label>
+            <!--            <input class="inp" type="text" disabled [(ngModel)]="listOfData4.marque">-->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <label> N° Telephone :</label>
+          </div>
+          <div class="col-md-6">
+            <label>
+              <input class="inp" type="text" disabled value="{{totalData.tel}}">
+            </label>
+            <!--            <input class="inp" type="text" disabled [(ngModel)]="listOfData4.marque">-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label> Total de jours : </label>
+          </div>
+          <div class="col-md-6">
+            <label>
+              <input class="inp" type="text" disabled value="{{totalData.totalJours}}">
+            </label>
+            <!--            <input class="inp" type="text" disabled [(ngModel)]="listOfData4.marque">-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label> Total de coût : </label>
+          </div>
+          <div class="col-md-6">
+            <label>
+              <input class="inp" type="text" disabled value="{{totalData.totalPrix}}">
+            </label>
+            <!--            <input class="inp" type="text" disabled [(ngModel)]="listOfData4.matricule">-->
+          </div>
+        </div>
+      </div>
+
+    </p-tabPanel>
+
+
+
+<!--  </div>-->
 
 
   <!--    <p-tabPanel class="tab-pane fade" header="Entretien et Réparation">-->
@@ -400,7 +446,7 @@
 
   <!--    </p-tabPanel>-->
 
-
+  </p-tabView>
 </p-dialog>
 
 <!--<nz-modal [(nzVisible)]="showV" nzTitle="{{title}}" disabled="!validateForm.valid" (nzOnCancel)="handleCancel()"-->

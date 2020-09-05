@@ -38,4 +38,9 @@ export class VoitureService {
     return this.http.get(endpoint + "api/voiture/details/" + id);
 
   }
+
+  sercheAdv(value: any) {
+    return this.http.post(endpoint + "api/voiture/search-adv",value);
+
+  }
 }

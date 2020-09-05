@@ -5,7 +5,7 @@
 <div class="row">
   <!-- Search form -->
   <div class="col-10">
-    <input [(ngModel)]="search" class="form-control" type="text" placeholder="Search" aria-label="Search">
+    <input [(ngModel)]="search" (keyup)="searchData($event)" class="form-control" type="text" placeholder="Search" aria-label="Search">
   </div>
   <div class="col-2">
     <button (click)="searchData()" style="width: 100%;height: 100%;" nz-button [nzType]="'primary'">Search</button>
@@ -193,7 +193,7 @@
 </nz-modal>
 
 
-<p-dialog [style]="{'width':'1300px'}" header="Afficher les détails du voiture" [(visible)]="isVisible2">
+<p-dialog [ngClass]="isCSS?'style1':'style1'" [style]="{'width':'1300px'}" header="Afficher les détails du voiture" [(visible)]="isVisible2">
 
 
   <p-tabView class="ui-window-panel" [controlClose]="true">
@@ -211,7 +211,9 @@
       <div class="container-fluid">
         <app-entretien
           [entretiens]="entretien"
-          [newEntretien]="true">
+          [id]="id"
+          [newEntretien]="true"
+          (concat)="checkCSS($event)">
         </app-entretien>
       </div>
     </p-tabPanel>
@@ -223,7 +225,7 @@
             <label> Marque : </label>
           </div>
           <div class="col-md-6">
-            <!--            <input class="inp" type="text" disabled value="{{listOfData4.marque}}">-->
+                        <input class="inp" type="text" disabled value="{{listOfData4.marque}}">
             <!--            <input class="inp" type="text" disabled [(ngModel)]="listOfData4.marque">-->
           </div>
         </div>
@@ -232,7 +234,7 @@
             <label> Imatriculation : </label>
           </div>
           <div class="col-md-6">
-            <!--            <input class="inp" type="text" disabled value="{{listOfData4.matricule}}">-->
+                        <input class="inp" type="text" disabled value="{{listOfData4.matricule}}">
             <!--            <input class="inp" type="text" disabled [(ngModel)]="listOfData4.matricule">-->
           </div>
         </div>
@@ -241,7 +243,7 @@
             <label> Prix unitaire TTC : </label>
           </div>
           <div class="col-md-6">
-            <!--            <input class="inp" type="text" disabled value="{{listOfData4.prixUnitaireTTC}}">-->
+                        <input class="inp" type="text" disabled value="{{listOfData4.prixUnitaireTTC}}">
             <!--            <input class="inp" type="text" disabled [(ngModel)]="listOfData4.prixUnitaireTTC">-->
           </div>
         </div>
@@ -250,7 +252,7 @@
             <label> Total : </label>
           </div>
           <div class="col-md-6">
-            <!--            <input class="inp" type="text" disabled value="{{listOfData4.total}}">-->
+                        <input class="inp" type="text" disabled value="{{listOfData4.total}}">
             <!--            <input class="inp" type="text" disabled [(ngModel)]="listOfData4.total">-->
           </div>
         </div>
@@ -259,7 +261,7 @@
             <label> Total ENTRETIEN : </label>
           </div>
           <div class="col-md-6">
-            <!--            <input class="inp" type="text" disabled value="{{listOfData4.totalEntretien}}">-->
+                        <input class="inp" type="text" disabled value="{{listOfData4.totalEntretien}}">
             <!--            <input class="inp" type="text" disabled [(ngModel)]="listOfData4.totalEntretien">-->
           </div>
         </div>

@@ -256,12 +256,7 @@ export class DashboardComponent implements OnInit {
         .subscribe(data => {
             this.fileExcel.status = 'done';
             console.log("------------> response ",data);
-            if (data.toLowerCase()!=='done')
-              this.msg.error(data);
-            else
-              this.msg.success('Template uploaded successfully');
-
-
+            this.msg.success('Template uploaded successfully');
           },
           error =>
           {

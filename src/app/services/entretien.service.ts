@@ -9,9 +9,10 @@ export class EntretienService {
 
   constructor(private http: HttpClient) { }
 
-  saveEntretien(clinet) {
+  saveEntretien(clinet,id) {
     console.log("ADD or SAVE Entretien ",clinet);
-    return this.http.post(endpoint + "api/entretien/add", clinet);
+    console.log("URL :",endpoint + "api/entretien/add/"+id);
+    return this.http.post(endpoint + "api/entretien/add/"+id, clinet);
   }
 
   deleteEntretien(id: any) {

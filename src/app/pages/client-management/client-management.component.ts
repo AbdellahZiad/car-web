@@ -52,6 +52,36 @@ export class ClientManagementComponent implements OnInit {
   title: any;
   showV: boolean = false;
   listOfData3: VoitureModel[];
+  totalData: ClientModel = {
+    id: null,
+    nom: '',
+    prenom:'',
+    cin: '',
+    tel: '',
+    dateDebut: null,
+    dateFin: null,
+    numberDay: '',
+    total: '',
+    nat: '',
+    matricule: '',
+    nPermis: '',
+    adressMaroc: '',
+    adressEtranger: '',
+    totalJours: null,
+    totalPrix: null,
+    vehicleList: [],
+    nom1:null,
+    prenom1:null,
+    name1:null,
+    cin1:null,
+    tel1:null,
+    nat1:null,
+    nPermis1:null,
+    dateFinPermis1:null,
+    adressMaroc1:null,
+    adressEtranger1:null,
+    adressEtranger2:null
+  };
   listOfData4: any;
 
 
@@ -63,28 +93,35 @@ export class ClientManagementComponent implements OnInit {
 
     this.validateForm = this.fb.group({
       id: null,
-      name: [null, [Validators.required]],
+      nom: [null, [Validators.required]],
+      prenom: [null, [Validators.required]],
       cin: [null],
       tel: [null, [Validators.required, Validators.pattern(new RegExp("[0-9 ]{12}"))]],
       dateDebut: [null, [Validators.required]],
       dateFin: [null, [Validators.required]],
-      name1: [null],
+      nom1: [null,],
+      prenom1: [null,],
       cin1: [null],
-      tel1: [null, ],
-      numberDay: [null, ],
-      total: [null, ],
+      tel1: [null,],
+      numberDay: [null,],
+      total: [null,],
       nameCdt: [null,],
+      dateFinPermis: [null,],
+      dateFinPermis1: [null,],
       livraison: [null,],
-      recuperation: [null, ],
-      matricule: [null, ],
-      nat :  [null],
-      nPermis : [null],
-      adressMaroc : [null, ],
-      adressEtranger : [null, ],
-      nat1 :  [null],
-      nPermis1 : [null],
-      adressMaroc1 : [null, ],
-      adressEtranger1 : [null, ],
+      recuperation: [null,],
+      matricule: [null,],
+      nat: [null],
+      nPermis: [null],
+      adressMaroc: [null,],
+      adressEtranger: [null,],
+      nat1: [null],
+      nPermis1: [null],
+      adressMaroc1: [null,],
+      adressEtranger1: [null,],
+      name1:[null],
+      adressEtranger2:[null],
+
     });
 
     // this.getAllUsers();
@@ -242,7 +279,7 @@ export class ClientManagementComponent implements OnInit {
     // });
   }
 
-  searchData() {
+  searchData(eve?:any) {
     console.log("-----------> SEARCH", this.search);
     this.clientService.search(this.search).subscribe(
       (data: ClientModel[]) => this.clients = data
@@ -257,7 +294,7 @@ export class ClientManagementComponent implements OnInit {
   private getVoitureList() {
     this.clientService.getAllVoiture().subscribe(
       (data: VoitureModel[]) => {
-        this.voiturList = data
+        this.voiturList = data;
         console.log("----------> dataV", data)
       }
     )
@@ -278,12 +315,13 @@ export class ClientManagementComponent implements OnInit {
       .subscribe((data: ClientModel) => {
         console.log("Data Details = ", data);
         this.listOfData3 = data.vehicleList;
+        this.totalData = data;
         // this.listOfData4 = data;
 
-        console.log("Data listOfData4 = ", this.listOfData4);
+        console.log("Data totalData = ", this.totalData);
 
         // this.entretien = data.entretienAndFixes;
-        console.log("Data listOfData3 = ", this.listOfData3);
+        console.log("Data data = ", data);
         // console.log("Data entretien = ",this.entretien);
 
       })
@@ -293,10 +331,10 @@ export class ClientManagementComponent implements OnInit {
   searchDataV() {
     console.log("-------> search Data", this.search)
     this.voitureService.search(this.search).subscribe(
-      (data:VoitureModel[]) =>{
-        console.log("---------> DATA FILTER",data)
+      (data: VoitureModel[]) => {
+        console.log("---------> DATA FILTER", data)
         if (data)
-        this.listOfData3 = data;
+          this.listOfData3 = data;
         else
           this.listOfData3 = []
 

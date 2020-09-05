@@ -7,7 +7,7 @@
 <form nz-form [formGroup]="validateForm" class="ant-advanced-search-form" *ngIf="isCollapse">
   <div nz-row>
     <div class="ml-2" nz-col [nzSpan]="5">
-      <nz-form-label> Nom de client</nz-form-label>
+      <nz-form-label> Imatriculation</nz-form-label>
     </div>
     <div class="ml-2" nz-col [nzSpan]="7">
       <nz-form-label>Date location</nz-form-label>
@@ -21,16 +21,16 @@
   </div>
   <div nz-row>
     <div  class="ml-2" nz-col [nzSpan]="5">
-      <input formControlName="surveyID" nz-input placeholder=""/>
+      <input formControlName="matricule" nz-input placeholder=""/>
     </div>
     <div  class="ml-2" nz-col [nzSpan]="7">
-      <nz-range-picker style="width: 100%" formControlName="submittedOn" [nzFormat]="dateFormat"></nz-range-picker>
+      <nz-range-picker style="width: 100%" formControlName="dateLocation" [nzFormat]="dateFormat"></nz-range-picker>
     </div>
     <div  class="ml-2" nz-col [nzSpan]="5">
-      <input formControlName="agent" nz-input placeholder=""/>
+      <input formControlName="marque" nz-input placeholder=""/>
     </div>
     <div  class="ml-2" nz-col  [nzSpan]="5">
-      <nz-select style="width: 100%" formControlName="by" nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
+      <nz-select style="width: 100%" formControlName="disponible" nzShowSearch nzAllowClear nzPlaceHolder="Select a person">
         <nz-option nzLabel="DISPONIBLE" nzValue="DISPONIBLE"></nz-option>
         <nz-option nzLabel="NON DISPONIBLE" nzValue="NON DISPONIBLE"></nz-option>
       </nz-select>
@@ -42,19 +42,24 @@
       <nz-form-label>Nobmre de jours</nz-form-label>
     </div>
     <div class="ml-4" nz-col [nzSpan]="6">
-      <nz-form-label>Status</nz-form-label>
+      <nz-form-label>prix</nz-form-label>
+    </div>
+
+    <div class="ml-4" nz-col [nzSpan]="6">
+      <nz-form-label>Disponible après la date</nz-form-label>
     </div>
   </div>
   <div nz-row>
     <div class="ml-2" nz-col [nzSpan]="8">
-      <nz-input-number style="width: 50%;" formControlName="scoreMin" nzPrecisionMode="cut" nzPlaceHolder="From"></nz-input-number>
-      <nz-input-number style="width: 50%;" formControlName="scoreMax" nzPrecisionMode="cut" nzPlaceHolder="To"></nz-input-number>
+      <nz-input-number style="width: 50%;" formControlName="nMin" nzPrecisionMode="cut" nzPlaceHolder="From"></nz-input-number>
+      <nz-input-number style="width: 50%;" formControlName="nMAx" nzPrecisionMode="cut" nzPlaceHolder="To"></nz-input-number>
     </div>
     <div class="ml-4" nz-col [nzSpan]="6">
-      <nz-select style="width: 100%" formControlName="statusSystem" nzShowSearch nzAllowClear nzPlaceHolder="Select a status">
-        <nz-option nzLabel="DISPONIBLE" nzValue="DISPONIBLE"></nz-option>
-        <nz-option nzLabel="NON DISPONIBLE" nzValue="NON DISPONIBLE"></nz-option>
-      </nz-select>
+        <input formControlName="prix" nz-input placeholder=""/>
+    </div>
+
+    <div class="ml-4" nz-col [nzSpan]="6">
+      <nz-date-picker style="width: 100%" formControlName="dateAfter"></nz-date-picker>
     </div>
   </div>
   <br>
@@ -110,39 +115,39 @@
 <nz-collapse>
   <nz-collapse-panel [nzHeader]="'Filter sur toutes les donnees de la base'" [nzActive]="true" [nzDisabled]="false">
     <p style="margin:0;">
-      <nz-table #basicTable [nzData]="listOfData">
+      <nz-table #basicTable [nzData]="voitures">
         <thead>
         <tr>
-          <th>Id</th>
-          <th>Nom de Client</th>
-          <th>CIN | Passport</th>
-          <th>Numéro de Téléphone</th>
-          <th>Date Debut</th>
-          <th>Date Fin</th>
-          <th>Nombre de jours</th>
-          <th>Prix</th>
-          <th>Action</th>
+          <th>ID</th>
+          <th>Marque</th>
+          <th>Imatriculation</th>
+          <th>Prix unitaire TTC</th>
+          <th>Nombre de Jours</th>
+          <th>Total</th>
+          <th>TOTAL ENTRETIEN</th>
+          <th>Disponibilité</th>
+          <!--    <th>Company Name</th>-->
+          <!--    <th>Role</th>-->
+          <!--    <th>Creation date</th>-->
+          <!--    <th>Active</th>-->
+          <!--    <th>Actions</th>-->
         </tr>
         </thead>
         <tbody>
         <tr *ngFor="let data of basicTable.data">
           <td>{{ data.id }}</td>
-          <td>{{ data.name }}</td>
-          <td>{{ data.cin }}</td>
-          <td>{{ data.tel }}</td>
-          <td>{{ data.dateDebut | date: "dd-mm-yyyy HH:MM" }}</td>
-          <td>{{ data.dateFin | date: "dd-mm-yyyy HH:MM"}}</td>
-          <td>{{ data.numberDay  }}</td>
+          <td>{{ data.marque }}</td>
+          <td>{{ data.matricule }}</td>
+          <td>{{ data.prixUnitaireTTC }}</td>
+          <td>{{ data.totalJours }}</td>
           <td>{{ data.total }}</td>
-          <td>
-            <button nz-button nzType="primary" [nzSize]="'small'"><i nz-icon nzType="eye"></i></button>
-            &nbsp;
-            <button nz-button (click)="showModal(data)" nzType="sucess" [nzSize]="'small'"><i nz-icon nzType="edit"></i>
-            </button>
-            &nbsp;
-            <button nz-button (click)="deleteUser(data.id)" nzType="danger" [nzSize]="'small'"><i nz-icon nzType="delete"></i>
-            </button>
-          </td>
+          <td>{{ data.totalEntretien }}</td>
+          <td>{{ data.dispo }}</td>
+          <!--    <td>{{ data.companyName }}</td>-->
+          <!--    <td>{{ data.role }}</td>-->
+          <!--    <td>{{ data.createDate | date: "dd-mm-yyyy" }}</td>-->
+          <!--    <td>{{ data.active }}</td>-->
+
         </tr>
         </tbody>
       </nz-table>

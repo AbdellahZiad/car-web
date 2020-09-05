@@ -38,6 +38,7 @@ import {ClientMonitoringComponent} from '../client-monitoring/client-monitoring.
 import {DashboardComponent} from "../dashboard/dashboard.component";
 import {HighchartsChartModule} from "highcharts-angular";
 import { EntretienComponent } from '../entretien/entretien.component';
+import { VotureDetailsComponent } from '../voture-details/voture-details.component';
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { EntretienComponent } from '../entretien/entretien.component';
     NzButtonModule, FormsModule, ReactiveFormsModule, NzCollapseModule, NzFormModule, NzInputNumberModule, NzTabsModule,
     NzIconModule, NzSelectModule, NzDatePickerModule, TableModule, NzInputModule, NzSpinModule, TabViewModule, DialogModule, ButtonModule, CarouselModule, ScrollPanelModule, DataViewModule, DropdownModule, PanelModule, HighchartsChartModule
   ],
-  declarations: [DashboardComponent,UsersManagementComponent, VehicleManagementComponent, VehicleMonitoringComponent, SearchAdvancedComponent, ClientManagementComponent, ClientMonitoringComponent, EntretienComponent],
+  declarations: [DashboardComponent,UsersManagementComponent, VehicleManagementComponent, VehicleMonitoringComponent, SearchAdvancedComponent, ClientManagementComponent, ClientMonitoringComponent, EntretienComponent, VotureDetailsComponent],
   exports: [ClientManagementComponent],
   providers: [NzMessageService, SurveyService]
 })

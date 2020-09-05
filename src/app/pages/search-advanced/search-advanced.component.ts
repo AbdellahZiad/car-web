@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {SurveyModel} from "../../model/SurveyModel";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {SurveyService} from "../welcome/services/survey.service";
+import {VoitureService} from "../../services/voiture.service";
+import {VoitureModel} from "../../model/VoitureModel";
 
 @Component({
   selector: 'app-search-advanced',
@@ -15,10 +17,11 @@ export class SearchAdvancedComponent implements OnInit {
   controlArray: Array<{ index: number; show: boolean }> = [];
   isCollapse = false;
   isFormCollapsed: boolean;
-  listSurveyFilter: SurveyModel;
+  voitures: any;
 
 
-  constructor(private fb: FormBuilder, private surveyService: SurveyService) {
+  constructor(private fb: FormBuilder, private surveyService: SurveyService,
+              private voitureService: VoitureService) {
   }
 
   toggleCollapse(): void {
@@ -31,19 +34,21 @@ export class SearchAdvancedComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      surveyID: null,
-      submittedOn: null,
-      agent: null,
-      by: null,
-      scoreMin: null,
-      scoreMax: null,
-      statusSystem: null,
+      matricule: null,
+      dateLocation: null,
+      marque: null,
+      disponible: null,
+      nMin: null,
+      nMAx: null,
+      prix: null,
+      dateAfter: null,
     });
-  this.getSurveyList();
+  this.getAllUsers();
 }
 
   resetForm(): void {
     this.validateForm.reset();
+    this.getAllUsers();
 }
 
 
@@ -55,57 +60,22 @@ export class SearchAdvancedComponent implements OnInit {
         console.log("--> getSurveyList LIST OF DATA", this.listOfData);
       });
   }
+  private getAllUsers() {
+    this.voitureService.getAllVoiture()
+      .subscribe(
+        data => {
+          this.voitures = data;
+          console.log("---voitures", this.voitures);
 
-  // searchData() {
-  //   this.surveyService
-  //       .searchSurvey(this.validateForm).subscribe(
-  //           survey=> {
-  //             console.log("-------> Search survey :",survey);
-  //             this.listOfData = survey;
-  //           }
-  //   )
-  // }
+        }
+      )
+  }
 
   searchData() {
-    this.surveyService.getSurveyUserList()
-      .subscribe((data: SurveyModel[]) => {
-        this.listSurveyFilter = this.validateForm.value;
-        console.log("------------> FILTER = ", this.listSurveyFilter);
-        console.log("------------> DATA = ", data);
-
-        this.listOfData = data;
-        // if (this.listOfData[0].dateCreate < this.listSurveyFilter.submittedOn[0])
-        console.log("------------>      this.listOfData[0].dateCreate = ", this.listOfData[0].dateCreate);
-        console.log("------------>      this.listSurveyFilter.submittedOn[0] = ", this.listSurveyFilter.submittedOn[0]);
-        console.log("------------>      this.listSurveyFilter.submittedOn[1] = ", this.listSurveyFilter.submittedOn[1]);
-        console.log("------------>      this.listOfData = ", this.listOfData);
-        // if (this.listOfData[0].dateCreate.getTime() <= this.listSurveyFilter.submittedOn[0].getTime())
-        //   console.log("this.listOfData[0].dateCreate <= this.listSurveyFilter.submittedOn[0]");
-        // if (this.listOfData[0].dateCreate.getTime() >= this.listSurveyFilter.submittedOn[1].getTime())
-        //   console.log("this.listOfData[0].dateCreate >= this.listSurveyFilter.submittedOn[1] ");
-
-        this.listOfData = this.listOfData.filter(
-          survey =>
-            (this.listSurveyFilter.surveyID ? this.listSurveyFilter.surveyID.toLowerCase() === survey.surveyID.toLowerCase() : true)
-            &&
-            (this.listSurveyFilter.by ? this.listSurveyFilter.by.toLowerCase() === survey.by.toLowerCase() : true)
-            &&
-            (this.listSurveyFilter.agent ? this.listSurveyFilter.agent.toLowerCase() === survey.agent.toLowerCase() : true)
-            &&
-            (this.listSurveyFilter.statusSystem ? this.listSurveyFilter.statusSystem.toLowerCase() === survey.statusSystem.toLowerCase() : true)
-            &&
-            ((this.listSurveyFilter.scoreMax && this.listSurveyFilter.scoreMin) ?
-              (survey.qualityScore <= this.listSurveyFilter.scoreMax && survey.qualityScore >= this.listSurveyFilter.scoreMin) : true)
-            && ((this.listSurveyFilter.submittedOn[0] && this.listSurveyFilter.submittedOn[1]) ?
-            this.listSurveyFilter.submittedOn[0].getTime() <= new Date(survey.dateCreate).getTime()
-            && this.listSurveyFilter.submittedOn[1].getTime() >= new Date(survey.dateCreate).getTime()
-            : true)
-        );
+    this.voitureService.sercheAdv(this.validateForm.value)
+      .subscribe(data => {
+        this.voitures = data;
+        console.log("------------> After FILTER = ", this.voitures);
       });
-    // this.getSurveyList();
-
-
-    console.log('this.listDataSurvey After = ', this.listOfData);
-
   }
 }

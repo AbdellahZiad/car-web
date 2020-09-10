@@ -5,7 +5,7 @@
 export const environment = {
   production: false
 };
-export const endpoint = 'https://nameless-basin-75602.herokuapp.com/';
+export const endpoint = 'http://165.22.74.23:8080/car-server-1.6-SNAPSHOT/';
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
